@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /**
  * Created by ChristopherDeloglos on 12/3/2016.
+ * Purpose: Educational model for robot programming
  */
 @Autonomous(name = "AutoOp Mode", group = "Autonomous")
 
