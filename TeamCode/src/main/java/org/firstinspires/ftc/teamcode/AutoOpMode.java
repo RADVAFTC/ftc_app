@@ -41,11 +41,7 @@ public class AutoOpMode extends LinearOpMode
         waitForStart();
         DriveForwardDistance(1,GetTicksFromMeters(1.0));
         DriveForwardDistance(1,GetTicksFromMeters(1.0));
-
-
         //while(opModeIsActive()){}
-
-
 
     }
 
