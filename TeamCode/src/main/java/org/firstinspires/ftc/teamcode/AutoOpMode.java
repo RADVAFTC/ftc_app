@@ -22,6 +22,7 @@ public class AutoOpMode extends LinearOpMode
     private static final double DCMOTOR_SPEED_FULL_SPEED = 1;
     private DcMotor motorLeft;
     private DcMotor motorRight;
+    
     int[] motorLeftStepsTicks = {100, 100, 100, 100, 200, -200, 100, 100, 100, 100};
     int[] motorRightStepsTicks = {100, 0, 100, 0, 200, -200, 100, 0, 100, 0};
     double[] motorLeftStepsSpeed = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
