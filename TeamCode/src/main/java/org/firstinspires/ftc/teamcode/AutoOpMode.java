@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class AutoOpMode extends LinearOpMode
 {
-    private static final double TICKS_PER_REV = 1440; // Number of ticks in one motor turn
+    private static final double TICKS_PER_REV = 360; // Number of ticks in one motor turn
     private static final double REVS_PER_METER = 10; // Number of times the wheel turns after the robot moves 1 meter
     private static final double GEAR_RATIO = 1; // Number of times the motor rotates for 1 rotation of the wheel
     private static final int OPMODE_NUMBER_PATH_STEPS = 10;
