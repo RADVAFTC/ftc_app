@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -16,6 +17,7 @@ public class TeleOpMode extends LinearOpMode
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor motorLauncher;
+    private DcMotorController motorController1;
 
     private static final double MOTOR_SAFE_SPEED = 0.3;
     private static final double MOTOR_FULL_SPEED = 1;
@@ -23,9 +25,10 @@ public class TeleOpMode extends LinearOpMode
     @Override
     public void runOpMode() throws InterruptedException
     {
+        motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
-        motorLauncher = hardwareMap.dcMotor.get("motorLauncher");
+        //motorLauncher = hardwareMap.dcMotor.get("motorLauncher");
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
