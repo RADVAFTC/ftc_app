@@ -25,6 +25,7 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     private DcMotor motorLeft;
     private DcMotor motorRight;
     int[] thisismyint = {10,20,19};
+    private DcMotorController motorController1;
     int[] motorLeftStepsTicks =  { 100, 100, 100, 100, 200, -200, 100, 100, 100, 100};
     int[] motorRightStepsTicks = { 100,   0, 100, 0, 200, -200, 100, 0, 100, 0};
     double[] motorStepsSpeed =   {   1,   1, 1, 1, 1, 1, 1, 1, .5, 1};
@@ -34,6 +35,7 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
         //int stuffs = thisismyint[0];
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
+        motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
