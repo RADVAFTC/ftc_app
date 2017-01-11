@@ -16,8 +16,13 @@ public class TeleOpMode extends LinearOpMode
 {
     private DcMotor motorLeft;
     private DcMotor motorRight;
-    //private DcMotor motorLauncher;
+    private DcMotor motorTopSpinner;
+    private DcMotor motorPlexiglass;
+    //private DcMotor motorBottomSpinner;
+    //private DcMotor motorSpare;
     private DcMotorController motorController1;
+    private DcMotorController motorController2;
+    //private DcMotorController motorController3;
 
     private static final double MOTOR_SAFE_SPEED = 0.3;
     private static final double MOTOR_FULL_SPEED = 1;
@@ -26,9 +31,18 @@ public class TeleOpMode extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
+        motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
+        //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
+
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
-        //motorLauncher = hardwareMap.dcMotor.get("motorLauncher");
+
+        motorTopSpinner = hardwareMap.dcMotor.get ("motorTopSpinner");
+        motorPlexiglass = hardwareMap.dcMotor.get ("motorPlexiglass");
+
+        //motorBottomSpinner = hardwareMap.dcMotor.get ("motorBottomSpinner");
+        //motorSpare = hardwareMap.dcMotor.get ("motorSpare")
+
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
@@ -39,8 +53,11 @@ public class TeleOpMode extends LinearOpMode
         {
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            //motorLauncher.setPower(gamepad2.left_stick_y);
-            idle();
+            motorTopSpinner.setPower (gamepad2.left_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
+            motorPlexiglass.setPower (gamepad2.right_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
+
+
+                        idle();
         }
     }
 
