@@ -53,8 +53,8 @@ public class TeleOpMode extends LinearOpMode
         {
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorTopSpinner.setPower (gamepad2.left_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
-            motorPlexiglass.setPower (gamepad2.right_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
+            motorTopSpinner.setPower (gamepad2.left_stick_y);
+            motorPlexiglass.setPower (gamepad2.right_stick_y);
 
 
                         idle();
