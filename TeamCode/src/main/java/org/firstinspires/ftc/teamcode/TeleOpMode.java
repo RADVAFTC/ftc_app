@@ -16,7 +16,7 @@ public class TeleOpMode extends LinearOpMode
 {
     private DcMotor motorLeft;
     private DcMotor motorRight;
-    private DcMotor motorLauncher;
+    //private DcMotor motorLauncher;
     private DcMotorController motorController1;
 
     private static final double MOTOR_SAFE_SPEED = 0.3;
@@ -39,7 +39,7 @@ public class TeleOpMode extends LinearOpMode
         {
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorLauncher.setPower(gamepad2.left_stick_y);
+            //motorLauncher.setPower(gamepad2.left_stick_y);
             idle();
         }
     }
