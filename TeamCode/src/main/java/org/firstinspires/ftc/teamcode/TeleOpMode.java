@@ -18,14 +18,15 @@ public class TeleOpMode extends LinearOpMode
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor motorTopSpinner;
-    private DcMotor motorPlexiglass;
-    //private DcMotor motorBottomSpinner;
+    private DcMotor motorBottomSpinner;
+    //private DcMotor motorPlexiglass;
     //private DcMotor motorSpare;
     private DcMotorController motorController1;
     private DcMotorController motorController2;
     //private DcMotorController motorController3;
 
     private static final double MOTOR_SAFE_SPEED = 0.3;
+    private static final double MOTOR_STOP = 0;
     private static final double MOTOR_FULL_SPEED = 1;
     private static final double ACCELERATION_RATE = 0.001;
 
@@ -40,9 +41,11 @@ public class TeleOpMode extends LinearOpMode
         motorRight = hardwareMap.dcMotor.get("motorRight");
 
         motorTopSpinner = hardwareMap.dcMotor.get ("motorTopSpinner");
-        motorPlexiglass = hardwareMap.dcMotor.get ("motorPlexiglass");
+        motorBottomSpinner = hardwareMap.dcMotor.get ("motorBottomSpinner");
 
-        //motorBottomSpinner = hardwareMap.dcMotor.get ("motorBottomSpinner");
+        //motorPlexiglass = hardwareMap.dcMotor.get ("motorPlexiglass");
+
+
         //motorSpare = hardwareMap.dcMotor.get ("motorSpare")
 
 
@@ -55,14 +58,23 @@ public class TeleOpMode extends LinearOpMode
         {
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorTopSpinner.setPower (gamepad2.left_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
+            //motorTopSpinner.setPower (gamepad2.left_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
             //motorPlexiglass.setPower (gamepad2.right_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
-            motorPlexiglass.setPower(setMotorSpeed(gamepad2.right_stick_y + gamepad2.right_trigger - gamepad2.left_trigger));
+            //motorPlexiglass.setPower(setMotorSpeed(gamepad2.right_stick_y + gamepad2.right_trigger - gamepad2.left_trigger));
 
+            //==,!=,<,>,<=,>=
+            if (gamepad1.a==true) {
+                motorBottomSpinner.setPower(MOTOR_FULL_SPEED);
+                motorTopSpinner.setPower(MOTOR_FULL_SPEED);
+            }
+                if(gamepad1.b==true) {
+                        motorBottomSpinner.setPower(MOTOR_STOP);
+                        motorTopSpinner.setPower(MOTOR_STOP);
 
-                        idle();
-        }
-    }
+                        //idle();
+            }
+
+    };}
 
     private double setMotorSpeed(double desiredSpeed){
         double curSpeed = motorLeft.getPower();
