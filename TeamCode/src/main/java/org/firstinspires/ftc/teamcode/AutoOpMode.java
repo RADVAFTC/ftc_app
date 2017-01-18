@@ -18,38 +18,38 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     private static final double TICKS_PER_REV = 360; // Number of ticks in one motor turn
     private static final double REVS_PER_METER = 10; // Number of times the wheel turns after the robot moves 1 meter
     private static final double GEAR_RATIO = 1; // Number of times the motor rotates for 1 rotation of the wheel
-    private static final int OPMODE_NUMBER_PATH_STEPS = 10;
+    //private static final int OPMODE_NUMBER_PATH_STEPS = 10;
     private static final double DCMOTOR_SPEED_STOPPED = 0;
     private static final double DCMOTOR_SPEED_FULL_SPEED = 1;
 
     private DcMotor motorLeft;
     private DcMotor motorRight;
-    int[] thisismyint = {10,20,19};
+    //int[] thisismyint = {10,20,19};
     private DcMotorController motorController1;
     int[] motorLeftStepsTicks =  { 100, 100, 100, 100, 200, -200, 100, 100, 100, 100};
-    int[] motorRightStepsTicks = { 100,   0, 100, 0, 200, -200, 100, 0, 100, 0};
-    double[] motorStepsSpeed =   {   1,   1, 1, 1, 1, 1, 1, 1, .5, 1};
+    int[] motorRightStepsTicks = { 100,   0, 100,   0, 200, -200, 100,   0, 100,   0};
+    double[] motorStepsSpeed =   {   1,   1,   1,   1,   1,    1,   1,   1,  .5,   1};
 
-    public void runOpMode() throws InterruptedException // Add this for default exactly as is
-    {
-        //int stuffs = thisismyint[0];
-        motorLeft = hardwareMap.dcMotor.get("motorLeft");
-        motorRight = hardwareMap.dcMotor.get("motorRight");
-        motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
+    public void runOpMode() throws InterruptedException {// Add this for default exactly as is
 
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorRight.setDirection(DcMotor.Direction.FORWARD);
-        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    //int stuffs = thisismyint[0];
+    motorLeft = hardwareMap.dcMotor.get("motorLeft");
+    motorRight = hardwareMap.dcMotor.get("motorRight");
+    motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
 
-        waitForStart();
+    motorLeft.setDirection(DcMotor.Direction.REVERSE);
+    motorRight.setDirection(DcMotor.Direction.FORWARD);
+    motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        for(int counter = 0;  counter < motorLeftStepsTicks.length;  counter++){
-            TurnDistance(motorStepsSpeed[counter], motorLeftStepsTicks[counter],motorRightStepsTicks[counter]);
-        }
+    waitForStart();
 
-        //while(opModeIsActive()){}
+    for(int counter = 0;  counter < motorLeftStepsTicks.length;  counter++){
+        TurnDistance(motorStepsSpeed[counter], motorLeftStepsTicks[counter],motorRightStepsTicks[counter]);
     }
+
+    //while(opModeIsActive()){}
+}
 
     public void DriveForwardDistance(double power, int ticks){
         ResetEncodersforRunToPosition(ticks, ticks);
