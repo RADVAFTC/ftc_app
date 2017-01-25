@@ -50,6 +50,14 @@ public class TeleOpMode extends LinearOpMode
 
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorRight.setDirection(DcMotor.Direction.FORWARD);
+
+        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        motorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorTopSpinner.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
         waitForStart();//Stops here after Init, waits for start
