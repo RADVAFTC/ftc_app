@@ -53,6 +53,7 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
 
         for(int i = 0;i<10;i++){
             TurnDistance(1,5000,5000);
+            wait(1000);
         }
 
         //while(opModeIsActive()){}
