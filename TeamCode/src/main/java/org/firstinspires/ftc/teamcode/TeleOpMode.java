@@ -18,45 +18,52 @@ public class TeleOpMode extends LinearOpMode
 
     private DcMotor motorLeft;
     private DcMotor motorRight;
-    //private DcMotor motorTopSpinner;
     private DcMotor motorBottomSpinner;
     private DcMotor motorPlexiglass;
-    //private DcMotor motorSpare;
+    private Servo servoBeacon;
+    private Servo servoSpanker;
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
-    private DcMotorController motorController3;
+    //private DcMotorController motorController3;
 
     private ServoController servoController1;
 
     private static final double MOTOR_SAFE_SPEED = 0.3;
-    private static final double MOTOR_LAUNCHER_SPEED = 0.3;
+    private static final double MOTOR_LAUNCHER_SPEED = 1;
+    private static final double MOTOR_LAUNCHER_SPEED_BACKOFF = -0.3;
     private static final double MOTOR_STOP = 0;
     private static final double MOTOR_FULL_SPEED = 1;
     private static final double ACCELERATION_RATE = 0.001;
+    private static final boolean LEFT = true;
+    private static final boolean RIGHT = false;
+
+    private boolean SERVO_DIRECTION = LEFT;
+    private static final double SERVO_MAX_POSITION = 0.7;
+    private static final double SERVO_MIN_POSITION = 0.3;
 
     @Override
     public void runOpMode() throws InterruptedException
     {
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
-        motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
-
-        servoController1 = hardwareMap.servoController.get("Servo Controller 1");
+        //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
-
-        //motorTopSpinner = hardwareMap.dcMotor.get ("motorTopSpinner");
         motorBottomSpinner = hardwareMap.dcMotor.get ("motorBottomSpinner");
-
         motorPlexiglass = hardwareMap.dcMotor.get ("motorPlexiglass");
-        //motorSpare = hardwareMap.dcMotor.get ("motorSpare")
+
+        servoController1 = hardwareMap.servoController.get("Servo Controller 1");
+
+        servoBeacon = hardwareMap.servo.get("Servo 1");
+        servoSpanker = hardwareMap.servo.get("Servo 2");
 
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
         motorPlexiglass.setDirection(DcMotor.Direction.REVERSE);
+        motorBottomSpinner.setDirection(DcMotor.Direction.REVERSE);
 
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -75,6 +82,10 @@ public class TeleOpMode extends LinearOpMode
             if (gamepad2.right_bumper == true)
             {
                 motorPlexiglass.setPower(MOTOR_LAUNCHER_SPEED);
+            }
+            else if(gamepad2.left_bumper == true)
+            {
+                motorPlexiglass.setPower(MOTOR_LAUNCHER_SPEED_BACKOFF);
             }
             else{
                 motorPlexiglass.setPower(MOTOR_STOP);
@@ -118,4 +129,17 @@ public class TeleOpMode extends LinearOpMode
             }
         return(curSpeed);
     }
+
+    private double wiggleBeaconButtonBanger()
+    {
+        if (SERVO_DIRECTION == LEFT)
+        {
+            servoBeacon.setPosition(servoBeacon.getPosition()+0.1);
+        if (servoBeacon.getPosition()> SERVO_MAX_POSITION)
+            {
+                SERVO_DIRECTION = RIGHT;
+            }
+        }
+        return wiggleBeaconButtonBanger();
+        }
 }
