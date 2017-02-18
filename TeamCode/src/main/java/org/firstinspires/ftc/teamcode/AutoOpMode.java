@@ -17,8 +17,8 @@ import com.qualcomm.robotcore.hardware.ServoController;
 
 public class AutoOpMode extends LinearOpMode // Add this for default (Change AutoOpMode to match filename/classname)
 {
-    private static final double TICKS_PER_REV = 360; // Number of ticks in one motor turn
-    private static final double REVS_PER_METER = 10; // Number of times the wheel turns after the robot moves 1 meter
+    private static final double TICKS_PER_REV = 420; // Number of ticks in one motor turn
+    private static final double REVS_PER_METER = 3.1246; // Number of times the wheel turns after the robot moves 1 meter
     private static final double GEAR_RATIO = 1; // Number of times the motor rotates for 1 rotation of the wheel
     private static final double DCMOTOR_SPEED_STOPPED = 0;
     private static final double DCMOTOR_SPEED_FULL_SPEED = 1;
@@ -26,8 +26,10 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     //Motor Configs//
     private DcMotor motorLeft;
     private DcMotor motorRight;
-    private DcMotor motorTopSpinner;
     private DcMotor motorBottomSpinner;
+    private DcMotor motorPlexiglass;
+    private Servo servoBeacon;
+    private Servo servoSpanker;
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
@@ -35,40 +37,40 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     //Servo Configs//
     private ServoController servoController1;
 
-    private Servo servoBeacon;
-    private Servo servoSpanker;
-
     int[] motorLeftStepsTicks = {100, 100, 100, 100, 200, -200, 100, 100, 100, 100};
     int[] motorRightStepsTicks = {100, 0, 100, 0, 200, -200, 100, 0, 100, 0};
     double[] motorStepsSpeed = {1, 1, 1, 1, 1, 1, 1, 1, .5, 1};
 
     public void runOpMode() throws InterruptedException {// Add this for default exactly as is
 
-        //int stuffs = thisismyint[0];
-        motorLeft = hardwareMap.dcMotor.get("motorLeft");
-        motorRight = hardwareMap.dcMotor.get("motorRight");
-        motorTopSpinner = hardwareMap.dcMotor.get("motorTopSpinner");
-        motorBottomSpinner = hardwareMap.dcMotor.get("motorBottomSpinner");
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
+        //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
-        servoController1 = hardwareMap.servoController.get ("Servo Controller 1");
-        servoBeacon = hardwareMap.servo.get ("Servo Beacon");
-        servoSpanker = hardwareMap.servo.get("Servo Spanker");
+        motorLeft = hardwareMap.dcMotor.get("motorLeft");
+        motorRight = hardwareMap.dcMotor.get("motorRight");
+        motorBottomSpinner = hardwareMap.dcMotor.get("motorBottomSpinner");
+        motorPlexiglass = hardwareMap.dcMotor.get("motorPlexiglass");
 
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorRight.setDirection(DcMotor.Direction.FORWARD);
+        servoController1 = hardwareMap.servoController.get("Servo Controller 1");
+
+        servoBeacon = hardwareMap.servo.get("Servo 1");
+        servoSpanker = hardwareMap.servo.get("Servo 2");
+
+        motorLeft.setDirection(DcMotor.Direction.FORWARD);
+        motorRight.setDirection(DcMotor.Direction.REVERSE);
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-
-
         waitForStart();
 
-
         for(int i = 0;i<10;i++){
-            TurnDistance(1,5000,5000);
-            wait(1000);
+            TurnDistance(1,GetTicksFromFeet(1),GetTicksFromFeet(1));
+        }
+        for(int i = 0;i<10;i++){
+            motorLeft.setDirection(DcMotor.Direction.REVERSE);
+            motorRight.setDirection(DcMotor.Direction.FORWARD);
+            TurnDistance(1,GetTicksFromFeet(1),GetTicksFromFeet(1));
         }
 
         //while(opModeIsActive()){}
@@ -149,5 +151,8 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     public int GetTicksFromMeters(double Meters) {
         Double ticks = GEAR_RATIO * (TICKS_PER_REV * REVS_PER_METER * Meters);
         return (ticks.intValue());
+    }
+    public int GetTicksFromFeet(double Feet) {
+        return (GetTicksFromMeters(Feet/3.28084));
     }
 }

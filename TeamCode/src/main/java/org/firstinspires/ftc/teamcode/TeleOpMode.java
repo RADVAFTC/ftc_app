@@ -60,11 +60,11 @@ public class TeleOpMode extends LinearOpMode {
         servoBeacon = hardwareMap.servo.get("Servo 1");
         servoSpanker = hardwareMap.servo.get("Servo 2");
 
-
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
         motorPlexiglass.setDirection(DcMotor.Direction.REVERSE);
         motorBottomSpinner.setDirection(DcMotor.Direction.REVERSE);
+
 
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -75,7 +75,6 @@ public class TeleOpMode extends LinearOpMode {
         motorPlexiglass.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servoBeacon.setPosition(0.5);
-        //servoBeacon.setDirection(Servo.Direction.REVERSE);
 
         waitForStart();//Stops here after Init, waits for start
 
@@ -106,8 +105,6 @@ public class TeleOpMode extends LinearOpMode {
             if (gamepad1.b == true) {
                 motorBottomSpinner.setPower(MOTOR_STOP);
                 //motorTopSpinner.setPower(MOTOR_STOP);
-
-                //idle();
             }
 
             if(gamepad2.y == true){
