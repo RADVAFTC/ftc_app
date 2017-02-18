@@ -31,7 +31,7 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
-    
+
     //Servo Configs//
     private ServoController servoController1;
 

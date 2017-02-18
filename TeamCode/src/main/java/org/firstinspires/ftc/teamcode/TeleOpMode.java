@@ -79,10 +79,10 @@ public class TeleOpMode extends LinearOpMode
         {
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-<<<<<<< HEAD
-            motorTopSpinner.setPower (gamepad2.left_stick_y);
+
+            //motorTopSpinner.setPower (gamepad2.left_stick_y);
             motorPlexiglass.setPower (gamepad2.right_stick_y);
-=======
+
             if (gamepad2.right_bumper == true)
             {
                 motorPlexiglass.setPower(MOTOR_LAUNCHER_SPEED);
@@ -112,7 +112,7 @@ public class TeleOpMode extends LinearOpMode
         }
 
     };}
->>>>>>> 653588d1541422af331369fc1b60db86cfe80b47
+
 
     private double setMotorSpeed(double desiredSpeed){
         double curSpeed = motorLeft.getPower();
