@@ -29,10 +29,12 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     private DcMotor motorBottomSpinner;
     private DcMotor motorPlexiglass;
     private Servo servoBeacon;
-    private Servo servoSpanker;
+    private DcMotor motorSpanker;
+
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
+    private DcMotorController motorController3;
 
     //Servo Configs//
     private ServoController servoController1;
@@ -45,17 +47,18 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
 
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
-        //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
+        motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
         motorBottomSpinner = hardwareMap.dcMotor.get("motorBottomSpinner");
         motorPlexiglass = hardwareMap.dcMotor.get("motorPlexiglass");
+        motorSpanker = hardwareMap.dcMotor.get("motorSpanker");
 
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
         servoBeacon = hardwareMap.servo.get("Servo 1");
-        servoSpanker = hardwareMap.servo.get("Servo 2");
+
 
         motorLeft.setDirection(DcMotor.Direction.FORWARD);
         motorRight.setDirection(DcMotor.Direction.REVERSE);
@@ -64,6 +67,37 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
 
         waitForStart();
 
+        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLeft.setTargetPosition(1000);
+        motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLeft.setPower(1);
+        while(motorLeft.isBusy()){
+
+        }
+
+        motorLeft.setTargetPosition(motorLeft.getCurrentPosition()-1000);
+        motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLeft.setPower(1);
+        while(motorLeft.isBusy()){
+
+        }
+
+        while(opModeIsActive()){
+            motorRight.setPower(1);
+        }
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+        motorBottomSpinner.setPower(0);
+        motorPlexiglass.setPower(0);
+        servoBeacon.setPosition(0.5);
+        motorSpanker.setPower(0);
+
+
+
+
+
+
+        /*
         for(int i = 0;i<10;i++){
             TurnDistance(1,GetTicksFromFeet(1),GetTicksFromFeet(1));
         }
@@ -72,7 +106,7 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
             motorRight.setDirection(DcMotor.Direction.FORWARD);
             TurnDistance(1,GetTicksFromFeet(1),GetTicksFromFeet(1));
         }
-
+        */
         //while(opModeIsActive()){}
 
         /*
