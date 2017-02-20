@@ -20,20 +20,22 @@ public class TeleOpMode extends LinearOpMode {
     private DcMotor motorRight;
     private DcMotor motorBottomSpinner;
     private DcMotor motorPlexiglass;
+    private DcMotor motorSpanker;
     private Servo servoBeacon;
-    private Servo servoSpanker;
+
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
-    //private DcMotorController motorController3;
+    private DcMotorController motorController3;
 
     private ServoController servoController1;
 
     private static final double MOTOR_SAFE_SPEED = 0.3;
-    private static final double MOTOR_LAUNCHER_SPEED = 1;
+    private static final double MOTOR_LAUNCHER_SPEED = 0.8;
     private static final double MOTOR_LAUNCHER_SPEED_BACKOFF = -0.3;
     private static final double MOTOR_STOP = 0;
     private static final double MOTOR_FULL_SPEED = 1;
+    private static final double MOTOR_SPANKER_SPEED = 0.8;
     private static final double ACCELERATION_RATE = 0.001;
     private static final boolean LEFT = true;
     private static final boolean RIGHT = false;
@@ -48,22 +50,24 @@ public class TeleOpMode extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
-        //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
+        motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
         motorBottomSpinner = hardwareMap.dcMotor.get("motorBottomSpinner");
         motorPlexiglass = hardwareMap.dcMotor.get("motorPlexiglass");
+        motorSpanker = hardwareMap.dcMotor.get("motorSpanker");
 
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
         servoBeacon = hardwareMap.servo.get("Servo 1");
-        servoSpanker = hardwareMap.servo.get("Servo 2");
+
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
         motorPlexiglass.setDirection(DcMotor.Direction.REVERSE);
         motorBottomSpinner.setDirection(DcMotor.Direction.REVERSE);
+        motorSpanker.setDirection(DcMotor.Direction.REVERSE);
 
 
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -73,18 +77,31 @@ public class TeleOpMode extends LinearOpMode {
         motorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBottomSpinner.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         motorPlexiglass.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorSpanker.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servoBeacon.setPosition(0.5);
 
         waitForStart();//Stops here after Init, waits for start
 
         while (opModeIsActive()) {
+            // CONTROLLER 1
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
+            if (gamepad1.left_bumper == true) {
+                motorSpanker.setPower(MOTOR_SPANKER_SPEED);
+            }
+            else{
+                motorSpanker.setPower(MOTOR_STOP);
+            }
 
-            //motorTopSpinner.setPower (gamepad2.left_stick_y);
-            motorPlexiglass.setPower(gamepad2.right_stick_y);
+            if (gamepad1.right_bumper == true) {
+                motorSpanker.setPower(-MOTOR_SPANKER_SPEED);
+            }
+            else{
+                motorSpanker.setPower(MOTOR_STOP);
+            }
 
+            // CONTROLLER 2
             if (gamepad2.right_bumper == true) {
                 motorPlexiglass.setPower(MOTOR_LAUNCHER_SPEED);
             } else if (gamepad2.left_bumper == true) {
@@ -92,25 +109,25 @@ public class TeleOpMode extends LinearOpMode {
             } else {
                 motorPlexiglass.setPower(MOTOR_STOP);
             }
-            //motorTopSpinner.setPower (gamepad2.left_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
-            //motorPlexiglass.setPower (gamepad2.right_stick_y + gamepad2.right_trigger - gamepad2.left_trigger);
-            //motorPlexiglass.setPower(setMotorSpeed(gamepad2.right_stick_y + gamepad2.right_trigger - gamepad2.left_trigger));
 
-            //==,!=,<,>,<=,>=
-            if (gamepad1.a == true) {
+            if (gamepad2.a == true) {
                 motorBottomSpinner.setPower(MOTOR_FULL_SPEED);
-                //motorTopSpinner.setPower(MOTOR_FULL_SPEED);
             }
-
-            if (gamepad1.b == true) {
+            if (gamepad2.b == true) {
                 motorBottomSpinner.setPower(MOTOR_STOP);
-                //motorTopSpinner.setPower(MOTOR_STOP);
             }
 
             if(gamepad2.y == true){
                 wiggleBeaconButtonBanger();
             }
         }
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+        motorBottomSpinner.setPower(0);
+        motorPlexiglass.setPower(0);
+        motorSpanker.setPower(0);
+        servoBeacon.setPosition(0.5);
+
     }
 
 
