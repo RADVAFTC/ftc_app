@@ -35,13 +35,13 @@ public class TeleOpMode extends LinearOpMode {
     private static final double MOTOR_LAUNCHER_SPEED_BACKOFF = -0.3;
     private static final double MOTOR_STOP = 0;
     private static final double MOTOR_FULL_SPEED = 1;
-    private static final double MOTOR_SPANKER_SPEED = 0.8;
+    private static final double MOTOR_SPANKER_SPEED = 0.7;
     private static final double ACCELERATION_RATE = 0.001;
     private static final boolean LEFT = true;
     private static final boolean RIGHT = false;
     private static final double BEACON_SERVO_WIGGLE_INC = 0.03;
-
-
+    private boolean JUST_PRESSED = false;
+    private boolean PRESSED_NOW = false;
     private boolean SERVO_DIRECTION = LEFT;
     private static final double SERVO_MAX_POSITION = 0.6;
     private static final double SERVO_MIN_POSITION = 0.3;
@@ -87,19 +87,35 @@ public class TeleOpMode extends LinearOpMode {
             // CONTROLLER 1
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
+
             if (gamepad1.left_bumper == true) {
+                PRESSED_NOW = true;
+            }
+            else{
+                PRESSED_NOW = false;
+            }
+            if (JUST_PRESSED == true && PRESSED_NOW == false){
+                motorSpanker.setPower(MOTOR_STOP);
+            }
+            else if (JUST_PRESSED == false && PRESSED_NOW == true){
                 motorSpanker.setPower(MOTOR_SPANKER_SPEED);
             }
-            else{
-                motorSpanker.setPower(MOTOR_STOP);
-            }
+            JUST_PRESSED = PRESSED_NOW;
 
             if (gamepad1.right_bumper == true) {
-                motorSpanker.setPower(-MOTOR_SPANKER_SPEED);
+                PRESSED_NOW = true;
             }
             else{
+                PRESSED_NOW = false;
+            }
+            if (JUST_PRESSED == true && PRESSED_NOW == false){
                 motorSpanker.setPower(MOTOR_STOP);
             }
+            else if (JUST_PRESSED == false && PRESSED_NOW == true){
+                motorSpanker.setPower(-MOTOR_SPANKER_SPEED);
+            }
+            JUST_PRESSED = PRESSED_NOW;
+
 
             // CONTROLLER 2
             if (gamepad2.right_bumper == true) {

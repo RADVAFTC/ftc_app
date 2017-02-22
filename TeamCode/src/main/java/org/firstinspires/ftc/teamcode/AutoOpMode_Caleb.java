@@ -44,6 +44,8 @@ public class AutoOpMode_Caleb extends LinearOpMode{
         motorRight.setDirection(DcMotor.Direction.REVERSE);
         motorFrontArm.setDirection(DcMotor.Direction.REVERSE);
 
+
+
         for (int counter = 0; counter <leftstepsticks.length; counter++ ){
 
         }
