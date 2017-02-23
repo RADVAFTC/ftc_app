@@ -129,6 +129,11 @@ public class TeleOpMode extends LinearOpMode {
             if (gamepad2.a == true) {
                 motorBottomSpinner.setPower(MOTOR_FULL_SPEED);
             }
+
+            if (gamepad2.x == true){
+                motorBottomSpinner.setPower(-MOTOR_FULL_SPEED);
+            }
+
             if (gamepad2.b == true) {
                 motorBottomSpinner.setPower(MOTOR_STOP);
             }
