@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.hardware.ServoController;
 
 public class AutoOpMode extends LinearOpMode // Add this for default (Change AutoOpMode to match filename/classname)
 {
-    private static final double TICKS_PER_REV = 420; // Number of ticks in one motor turn
+    private static final double TICKS_PER_REV = 1557; // Number of ticks in one motor turn
     private static final double REVS_PER_METER = 3.1246; // Number of times the wheel turns after the robot moves 1 meter
     private static final double GEAR_RATIO = 1; // Number of times the motor rotates for 1 rotation of the wheel
     private static final double DCMOTOR_SPEED_STOPPED = 0;
@@ -39,9 +39,18 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     //Servo Configs//
     private ServoController servoController1;
 
-    int[] motorLeftStepsTicks = {100, 100, 100, 100, 200, -200, 100, 100, 100, 100};
-    int[] motorRightStepsTicks = {100, 0, 100, 0, 200, -200, 100, 0, 100, 0};
-    double[] motorStepsSpeed = {1, 1, 1, 1, 1, 1, 1, 1, .5, 1};
+    double[] motorLeftStepsTicks =  {3, 6, 12};
+    double[] motorRightStepsTicks = {3, 6, 12};
+
+    double[] leftmotorStepsSpeed = {1, 1, 1};
+    double[] rightmotorStepsSpeed ={1, 1, 1};
+
+    double[] motorLeftStepsTicks2 =  {3, 6, 12};
+    double[] motorRightStepsTicks2 = {3, 6, 12};
+
+    double[] leftmotorStepsSpeed2 = {1, 1, 1};
+    double[] rightmotorStepsSpeed2 ={1, 1, 1};
+
 
     public void runOpMode() throws InterruptedException {// Add this for default exactly as is
 
@@ -59,42 +68,81 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
 
         servoBeacon = hardwareMap.servo.get("Servo 1");
 
-
+        motorBottomSpinner.setDirection(DcMotor.Direction.REVERSE);
+        motorPlexiglass.setDirection(DcMotor.Direction.REVERSE);
         motorLeft.setDirection(DcMotor.Direction.FORWARD);
+        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRight.setDirection(DcMotor.Direction.REVERSE);
-        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
-        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorLeft.setTargetPosition(1000);
-        motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorLeft.setPower(1);
-        while(motorLeft.isBusy()){
-
+        for( int i = 0 ; i<motorLeftStepsTicks.length && opModeIsActive(); i++ ){
+            motorLeft.setTargetPosition(motorLeft.getCurrentPosition() + GetTicksFromInches(motorLeftStepsTicks[i]));
+            motorRight.setTargetPosition(motorRight.getCurrentPosition() + GetTicksFromInches(motorRightStepsTicks[i]));
+            motorLeft.setPower(leftmotorStepsSpeed[i]);
+            motorRight.setPower(rightmotorStepsSpeed[i]);
+            while(motorLeft.isBusy() || motorRight.isBusy());
         }
 
-        motorLeft.setTargetPosition(motorLeft.getCurrentPosition()-1000);
-        motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorLeft.setPower(1);
-        while(motorLeft.isBusy()){
 
+
+
+        Thread.sleep(1000);
+        motorPlexiglass.setPower(1);
+        Thread.sleep(500);
+        motorPlexiglass.setPower(0);
+        motorBottomSpinner.setPower(1);
+        Thread.sleep(4000);
+        motorPlexiglass.setPower(-.1);
+        Thread.sleep(1000);
+        motorBottomSpinner.setPower(0);
+        motorPlexiglass.setPower(1);
+        Thread.sleep(500);
+        motorPlexiglass.setPower(0);
+
+
+        for( int i = 0 ; i<motorLeftStepsTicks2.length && opModeIsActive(); i++ ){
+            motorLeft.setTargetPosition(motorLeft.getCurrentPosition() + GetTicksFromInches(motorLeftStepsTicks2[i]));
+            motorRight.setTargetPosition(motorRight.getCurrentPosition() + GetTicksFromInches(motorRightStepsTicks2[i]));
+            motorLeft.setPower(leftmotorStepsSpeed2[i]);
+            motorRight.setPower(rightmotorStepsSpeed2[i]);
+            while(motorLeft.isBusy() || motorRight.isBusy());
         }
 
+        /*
+        motorLeft.setPower(1);
         while(opModeIsActive()){
-            motorRight.setPower(1);
+            motorLeft.setTargetPosition(Math.round(1557*10));
+            while(motorLeft.isBusy());
         }
+        */
+        //stop();
+
+        /*
+        motorPlexiglass.setTargetPosition(motorPlexiglass.getCurrentPosition() + motorPlexiglassStepsTicks[i] );
+        motorPlexiglass.setPower(motorPlexiglassStepsSpeed[i]);
+        while(motorPlexiglass.isBusy());
+
+
+        motorBottomSpinner.setTargetPosition(motorBottomSpinner.getCurrentPosition() + motorBottomSpinnerStepsTicks[i] );
+        motorBottomSpinner.setPower(motorBottomSpinnerStepsSpeed[i]);
+        while(motorBottomSpinner.isBusy());
+        */
+
+
+
+        //while(opModeIsActive()){}
         motorLeft.setPower(0);
         motorRight.setPower(0);
         motorBottomSpinner.setPower(0);
         motorPlexiglass.setPower(0);
-        servoBeacon.setPosition(0.5);
         motorSpanker.setPower(0);
-
-
-
-
+        servoBeacon.setPosition(0.5);
 
 
         /*
@@ -117,6 +165,9 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
 
 
     }
+
+
+
 
     public void DriveForwardDistance(double power, int ticks) {
         ResetEncodersforRunToPosition(ticks, ticks);
@@ -188,5 +239,16 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     }
     public int GetTicksFromFeet(double Feet) {
         return (GetTicksFromMeters(Feet/3.28084));
+    }
+    public int GetTicksFromInches(double Inches) {
+        return (GetTicksFromMeters((Inches/12)/3.28084));
+    }
+
+    public double GetFeetFromTicks(int Ticks) {
+        return(Ticks*3.28084/(GEAR_RATIO * (TICKS_PER_REV * REVS_PER_METER)));
+    }
+
+    public double GetMetersFromTicks(int Ticks){
+        return(Ticks/(GEAR_RATIO * (TICKS_PER_REV * REVS_PER_METER)));
     }
 }
