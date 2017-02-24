@@ -43,6 +43,8 @@ public class TeleOpMode extends LinearOpMode {
     private boolean JUST_PRESSED = false;
     private boolean PRESSED_NOW = false;
     private boolean SERVO_DIRECTION = LEFT;
+    private boolean __MOTOR_WAS_JUST_PRESSED = false;
+    private boolean __MOTOR_IS_PRESSED_NOW = false;
     private static final double SERVO_MAX_POSITION = 0.6;
     private static final double SERVO_MIN_POSITION = 0.3;
 
@@ -82,7 +84,8 @@ public class TeleOpMode extends LinearOpMode {
         servoBeacon.setPosition(0.5);
 
         waitForStart();//Stops here after Init, waits for start
-
+        //private boolean __MOTOR_WAS_JUST_PRESSED = false;
+        //private boolean __MOTOR_IS_PRESSED_NOW = false;
         while (opModeIsActive()) {
             // CONTROLLER 1
             motorLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
