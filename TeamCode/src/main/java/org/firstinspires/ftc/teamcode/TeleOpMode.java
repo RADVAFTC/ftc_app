@@ -81,7 +81,7 @@ public class TeleOpMode extends LinearOpMode {
         motorPlexiglass.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorSpanker.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servoBeacon.setPosition(0.5);
+        //servoBeacon.setPosition(0.5);
 
         waitForStart();//Stops here after Init, waits for start
         //private boolean __MOTOR_WAS_JUST_PRESSED = false;
@@ -140,17 +140,18 @@ public class TeleOpMode extends LinearOpMode {
             if (gamepad2.b == true) {
                 motorBottomSpinner.setPower(MOTOR_STOP);
             }
-
+            /*
             if(gamepad2.y == true){
                 wiggleBeaconButtonBanger();
             }
+            */
         }
         motorLeft.setPower(0);
         motorRight.setPower(0);
         motorBottomSpinner.setPower(0);
         motorPlexiglass.setPower(0);
         motorSpanker.setPower(0);
-        servoBeacon.setPosition(0.5);
+        //servoBeacon.setPosition(0.5);
 
     }
 
@@ -172,7 +173,7 @@ public class TeleOpMode extends LinearOpMode {
             }
         return (curSpeed);
     }
-
+/*
     private void wiggleBeaconButtonBanger() {
         telemetry.addData("ServoPosition",servoBeacon.getPosition());
         if (servoBeacon.getPosition() >= SERVO_MAX_POSITION) {
@@ -189,5 +190,6 @@ public class TeleOpMode extends LinearOpMode {
             servoBeacon.setPosition(servoBeacon.getPosition() + BEACON_SERVO_WIGGLE_INC);
         }
     }
+    */
 }
 

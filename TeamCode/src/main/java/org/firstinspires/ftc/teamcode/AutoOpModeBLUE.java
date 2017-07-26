@@ -13,9 +13,9 @@ import com.qualcomm.robotcore.hardware.ServoController;
  * Created by ChristopherDeloglos on 12/3/2016.
  * Purpose: Educational model for robot programming
  */
-@Autonomous(name = "AutoOp Mode", group = "Autonomous") // Add this for default (Change name)
+@Autonomous(name = "AutoOp Mode BLUE", group = "Autonomous") // Add this for default (Change name)
 
-public class AutoOpMode extends LinearOpMode // Add this for default (Change AutoOpMode to match filename/classname)
+public class AutoOpModeBLUE extends LinearOpMode // Add this for default (Change AutoOpMode to match filename/classname)
 {
     private static final double TICKS_PER_REV = 1557; // Number of ticks in one motor turn
     private static final double REVS_PER_METER = 3.1246; // Number of times the wheel turns after the robot moves 1 meter
@@ -39,17 +39,17 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
     //Servo Configs//
     private ServoController servoController1;
 
-    double[] motorLeftStepsTicks =  {3, 6, 12};
-    double[] motorRightStepsTicks = {3, 6, 12};
+    double[] motorLeftStepsTicks =  {32};
+    double[] motorRightStepsTicks = {24};
 
-    double[] leftmotorStepsSpeed = {1, 1, 1};
-    double[] rightmotorStepsSpeed ={1, 1, 1};
+    double[] leftmotorStepsSpeed = {1};
+    double[] rightmotorStepsSpeed ={1};
 
-    double[] motorLeftStepsTicks2 =  {3, 6, 12};
-    double[] motorRightStepsTicks2 = {3, 6, 12};
+    double[] motorLeftStepsTicks2 =  {32};
+    double[] motorRightStepsTicks2 = {22};
 
-    double[] leftmotorStepsSpeed2 = {1, 1, 1};
-    double[] rightmotorStepsSpeed2 ={1, 1, 1};
+    double[] leftmotorStepsSpeed2 = {1, 1};
+    double[] rightmotorStepsSpeed2 ={1, 1};
 
 
     public void runOpMode() throws InterruptedException {// Add this for default exactly as is
@@ -104,6 +104,11 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
         motorPlexiglass.setPower(1);
         Thread.sleep(500);
         motorPlexiglass.setPower(0);
+        Thread.sleep(2500);
+        motorSpanker.setPower(0.5);
+        Thread.sleep(200);
+        motorSpanker.setPower(0);
+        Thread.sleep(500);
 
 
         for( int i = 0 ; i<motorLeftStepsTicks2.length && opModeIsActive(); i++ ){
@@ -142,7 +147,7 @@ public class AutoOpMode extends LinearOpMode // Add this for default (Change Aut
         motorBottomSpinner.setPower(0);
         motorPlexiglass.setPower(0);
         motorSpanker.setPower(0);
-        servoBeacon.setPosition(0.5);
+        //servoBeacon.setPosition(0.5);
 
 
         /*
