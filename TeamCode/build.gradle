@@ -11,6 +11,10 @@
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 android {
+<<<<<<< HEAD
+=======
+    compileSdkVersion 19
+>>>>>>> 7897e44cc7f6e617eee4fecb75c1807195e1e8fa
     buildToolsVersion '26.0.1'
 }
 dependencies {
