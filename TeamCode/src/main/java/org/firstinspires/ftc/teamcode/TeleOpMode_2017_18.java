@@ -32,23 +32,17 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
 
     //private ServoController servoController1;
 
-    private static final double MOTOR_SAFE_SPEED = 0.3;
-    private static final double MOTOR_LAUNCHER_SPEED = 0.8;
-    private static final double MOTOR_LAUNCHER_SPEED_BACKOFF = -0.3;
-    private static final double MOTOR_STOP = 0;
-    private static final double MOTOR_FULL_SPEED = 1;
-    private static final double MOTOR_SPANKER_SPEED = 0.7;
-    private static final double ACCELERATION_RATE = 0.001;
-    private static final boolean LEFT = true;
-    private static final boolean RIGHT = false;
-    private static final double BEACON_SERVO_WIGGLE_INC = 0.03;
-    private boolean JUST_PRESSED = false;
-    private boolean PRESSED_NOW = false;
-    private boolean SERVO_DIRECTION = LEFT;
-    private boolean __MOTOR_WAS_JUST_PRESSED = false;
-    private boolean __MOTOR_IS_PRESSED_NOW = false;
-    private static final double SERVO_MAX_POSITION = 0.6;
-    private static final double SERVO_MIN_POSITION = 0.3;
+    private static final double MOTOR_SAFE_SPEED = 0.005;
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -79,10 +73,10 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        motorRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //motor5.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //servoBeacon.setPosition(0.5);
@@ -100,24 +94,35 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
             motorRearRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
              */
             //Sideways controls
-            if (gamepad1.dpad_left == true) {
-                motorFrontLeft.setPower(-.2);
-                motorRearLeft.setPower(.2);
-                motorFrontRight.setPower(-.2);
-                motorRearRight.setPower(.2);
+
+            motorFrontRight.setPower(.2);
+
+            /*if (gamepad1.dpad_left == true) {
+                motorFrontLeft.setPower(MOTOR_SAFE_SPEED);
+                motorRearLeft.setPower(MOTOR_SAFE_SPEED);
+                motorFrontRight.setPower(-MOTOR_SAFE_SPEED);
+                motorRearRight.setPower(-MOTOR_SAFE_SPEED);
 
             } else if (gamepad1.dpad_right == true) {
-                motorFrontLeft.setPower(.2);
-                motorRearLeft.setPower(-.2);
-                motorFrontRight.setPower(.2);
-                motorRearRight.setPower(-.2);
+                motorFrontLeft.setPower(1);
+                motorRearLeft.setPower(1);
+                motorFrontRight.setPower(1);
+                motorRearRight.setPower(1);
 
 
-            } else {
+            }else {
+                motorFrontLeft.setPower(0);
+                motorRearLeft.setPower(0);
+                motorFrontRight.setPower(-0);
+                motorRearRight.setPower(-0);
+
+                /*else {
                 motorFrontLeft.setPower(gamepad1.left_stick_y);
                 motorRearLeft.setPower(gamepad1.left_stick_y);
                 motorFrontRight.setPower(-gamepad1.right_stick_y);
                 motorRearRight.setPower(-gamepad1.right_stick_y);
+            */
+
             }
 
            /* else if (gamepad1.dpad_right == false) {
@@ -210,4 +215,4 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
     */
         }
 
-    }}
+    }
