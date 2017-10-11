@@ -76,12 +76,46 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
 
         // Sets mode for motors
+        /*
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        */
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorRearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorRearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
         waitForStart();
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()+2000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()+2000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+2000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+2000);
+
+        motorFrontLeft.setPower(1);
+        motorRearLeft.setPower(1);
+        motorFrontRight.setPower(1);
+        motorRearRight.setPower(1);
+        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+        
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()-1000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()-1000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()-1000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()-1000);
+        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()+3000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()+3000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+3000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+3000);
+        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+
+
 
 
         }
