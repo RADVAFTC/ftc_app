@@ -34,56 +34,42 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
 
     private static final double MOTOR_SAFE_SPEED = 0.005;
 
-
-
-
-
-
-
-
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
+        // Hardware Map for Motor Controllers
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
         //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
+        // Hardware Map for Motors
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
-        //motor5 = hardwareMap.dcMotor.get("motor5");
 
+        // Hardware Map for Servo Controllers
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
+        // Hardware Map for Servos
         servoChoppingBlock = hardwareMap.servo.get("Chopping Block");
 
-
+        // Sets default direction for motors
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
         motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
         motorRearRight.setDirection(DcMotor.Direction.FORWARD);
-        //motor5.setDirection(DcMotor.Direction.REVERSE);
 
-
+        // Sets mode for motors
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        /*
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        */
+        // Sets zero power behavior
         motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //motor5.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //servoChoppingBlock.setPosition(.5);
 
