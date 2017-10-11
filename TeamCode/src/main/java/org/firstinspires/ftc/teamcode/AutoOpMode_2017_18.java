@@ -83,11 +83,11 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
 
         waitForStart();
 
-        
+
         }
 
     }
-}
+
 
 
 
