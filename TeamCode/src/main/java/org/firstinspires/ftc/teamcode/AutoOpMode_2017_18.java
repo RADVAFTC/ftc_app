@@ -96,24 +96,28 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+2000);
         motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+2000);
 
-        motorFrontLeft.setPower(1);
-        motorRearLeft.setPower(1);
-        motorFrontRight.setPower(1);
-        motorRearRight.setPower(1);
+        motorFrontLeft.setPower(0.1);
+        motorRearLeft.setPower(0.1);
+        motorFrontRight.setPower(0.1);
+        motorRearRight.setPower(0.1);
         while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
-        
+        while(gamepad1.a==false);
+
+
 
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()-1000);
         motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()-1000);
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()-1000);
         motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()-1000);
         while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+        while(gamepad1.a==false);
 
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()+3000);
         motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()+3000);
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+3000);
         motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+3000);
         while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+        while(gamepad1.a==false);
 
 
 
