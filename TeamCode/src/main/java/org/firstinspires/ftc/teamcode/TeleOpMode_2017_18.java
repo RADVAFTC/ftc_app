@@ -23,14 +23,14 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorRearRight;
     // private DcMotor motor5;
-    //private Servo servo1;
+    private Servo servoChoppingBlock;
 
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
     //private DcMotorController motorController3;
 
-    //private ServoController servoController1;
+    private ServoController servoController1;
 
     private static final double MOTOR_SAFE_SPEED = 0.005;
 
@@ -56,15 +56,15 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
         //motor5 = hardwareMap.dcMotor.get("motor5");
 
-        //servoController1 = hardwareMap.servoController.get("Servo Controller 1");
+        servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
-        //servo1 = hardwareMap.servo.get("Servo 1");
+        servoChoppingBlock = hardwareMap.servo.get("Chopping Block");
 
 
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        motorRearRight.setDirection(DcMotor.Direction.REVERSE);
+        motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        motorRearRight.setDirection(DcMotor.Direction.FORWARD);
         //motor5.setDirection(DcMotor.Direction.REVERSE);
 
 
@@ -73,29 +73,45 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        /*
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        */
         motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //motor5.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //servoBeacon.setPosition(0.5);
+        //servoChoppingBlock.setPosition(.5);
 
         waitForStart();//Stops here after Init, waits for start
         //private boolean __MOTOR_WAS_JUST_PRESSED = false;
         //private boolean __MOTOR_IS_PRESSED_NOW = false;
         while (opModeIsActive()) {
             // CONTROLLER 1
-            /*
+
             //Forward and Backward Controls
             motorFrontLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorRearLeft.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorFrontRight.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
+            motorRearLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
+            motorFrontRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRearRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-             */
+
             //Sideways controls
 
-            motorFrontRight.setPower(.2);
+           /* motorFrontRight.setPower(0);
+
+            if (gamepad2.a == true){
+
+                servoChoppingBlock.setPosition(0);
+            }
+            else if (gamepad2.a == false){
+
+                servoChoppingBlock.setPosition(.8);
+            }
+            */
 
             /*if (gamepad1.dpad_left == true) {
                 motorFrontLeft.setPower(MOTOR_SAFE_SPEED);
