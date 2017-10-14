@@ -27,10 +27,7 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
     private DcMotor motorLift;
     private Servo servoLeftArm;
     private Servo servoRightArm;
-    private TouchSensor button;
-    //private
-
-
+    //private TouchSensor button;
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
