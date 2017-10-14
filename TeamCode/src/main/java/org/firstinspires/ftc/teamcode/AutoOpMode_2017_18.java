@@ -29,12 +29,10 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
     private DcMotor motorFrontRight;
     private DcMotor motorRearRight;
     private Servo servoChoppingBlock;
-    //private DcMotor motorSpanker;
 
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
-    //private DcMotorController motorController3;
 
     //Servo Configs//
     private ServoController servoController1;
@@ -54,39 +52,80 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
 
     public void runOpMode() throws InterruptedException {// Add this for default exactly as is
 
+        // Hardware Map for Motor Controllers
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
-        //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
+
+        // Hardware Map for Motors
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
-        //motorSpanker = hardwareMap.dcMotor.get("motorSpanker");
 
+        // Hardware Map for Servo Controllers
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
+        // Hardware Map for Servos
         servoChoppingBlock = hardwareMap.servo.get("Chopping Block");
 
+        // Sets default direction for motors
         motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
         motorRearRight.setDirection(DcMotor.Direction.FORWARD);
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
 
+        // Sets mode for motors
+        /*
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        */
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorRearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorRearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        waitForStart();
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()+2000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()+2000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+2000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+2000);
+
+        motorFrontLeft.setPower(0.1);
+        motorRearLeft.setPower(0.1);
+        motorFrontRight.setPower(0.1);
+        motorRearRight.setPower(0.1);
+        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+        while(gamepad1.a==false);
+
+
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()-1000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()-1000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()-1000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()-1000);
+        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+        while(gamepad1.a==false);
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()+3000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()+3000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+3000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+3000);
+        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
+        while(gamepad1.a==false);
 
 
 
 
+        }
 
     }
 
-
-
-}
 
 
 
