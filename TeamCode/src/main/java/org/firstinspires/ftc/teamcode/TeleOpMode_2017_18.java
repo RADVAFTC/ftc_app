@@ -94,10 +94,54 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
             // CONTROLLER 1
 
             //Forward and Backward Controls
-            motorFrontLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
+           /* motorFrontLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRearLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorFrontRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRearRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
+            */
+            motorFrontLeft.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
+            motorRearLeft.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
+            motorFrontRight.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
+            motorRearRight.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
+
+            motorFrontLeft.setPower(1*(gamepad1.right_stick_x));
+            motorRearLeft.setPower(-1*(gamepad1.right_stick_x));
+            motorFrontRight.setPower(-1*(gamepad1.right_stick_x));
+            motorRearRight.setPower(1*(gamepad1.right_stick_x));
+
+            motorFrontLeft.setPower(1*(gamepad1.right_stick_y));
+            motorRearLeft.setPower(-1*(gamepad1.right_stick_y));
+            motorFrontRight.setPower(-1*(gamepad1.right_stick_y));
+            motorRearRight.setPower(1*(gamepad1.right_stick_y));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //Sideways controls
 
