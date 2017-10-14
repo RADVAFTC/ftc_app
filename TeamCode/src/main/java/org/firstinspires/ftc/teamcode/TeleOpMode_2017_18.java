@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+
 import java.lang.Math.*;
 
 /**
@@ -25,6 +27,8 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
     private DcMotor motorLift;
     private Servo servoLeftArm;
     private Servo servoRightArm;
+    private TouchSensor button;
+    //private
 
 
 
@@ -65,7 +69,7 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
         motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
         motorRearRight.setDirection(DcMotor.Direction.FORWARD);
-        motorLift.setDirection((DcMotor.Direction.FORWARD));
+        motorLift.setDirection((DcMotor.Direction.REVERSE));
 
         // Sets mode for motors
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -112,25 +116,30 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
 
             // Motion Control
             /*
-            motorFrontLeft.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
-            motorRearLeft.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
-            motorFrontRight.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
-            motorRearRight.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
-            */
-
+            // Working control for omnidirection motion (not rotation)
             motorFrontLeft.setPower((1*padyroot) + (1*padxroot));
             motorRearLeft.setPower((1*padyroot) + (-1*padxroot));
             motorFrontRight.setPower((1*padyroot) + (-1*padxroot));
             motorRearRight.setPower((1*padyroot) + (1*padxroot));
+            */
 
-
+            /*
+            motorFrontLeft.setPower((1*padyroot) + (1*padxroot));
+            motorRearLeft.setPower((1*padyroot) + (-1*padxroot));
+            motorFrontRight.setPower((1*padyroot) + (-1*padxroot));
+            motorRearRight.setPower((1*padyroot) + (1*padxroot));
+            */
+            motorFrontLeft.setPower((1*padyroot) + (1*padxroot) + -1*(gamepad1.right_stick_x));
+            motorRearLeft.setPower((1*padyroot) + (-1*padxroot) + -1*(gamepad1.right_stick_x));
+            motorFrontRight.setPower((1*padyroot) + (-1*padxroot) + 1*(gamepad1.right_stick_x));
+            motorRearRight.setPower((1*padyroot) + (1*padxroot) + 1*(gamepad1.right_stick_x));
 
             // Pivot Control
-           /* motorFrontLeft.setPower(1*(gamepad1.right_stick_x));
+            /*motorFrontLeft.setPower(1*(gamepad1.right_stick_x));
             motorRearLeft.setPower(-1*(gamepad1.right_stick_x));
             motorFrontRight.setPower(-1*(gamepad1.right_stick_x));
             motorRearRight.setPower(1*(gamepad1.right_stick_x));
-            */
+*/
             //motorFrontLeft.setPower(1*(gamepad1.right_stick_y));
             //motorRearLeft.setPower(-1*(gamepad1.right_stick_y));
            // motorFrontRight.setPower(-1*(gamepad1.right_stick_y));
@@ -176,11 +185,19 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
                 motorRearRight.setPower(-gamepad1.right_stick_y);
             */
             //Servo Code
-
+            /*
             if (gamepad1.a == true){
 
-                servoLeftArm.setPosition(0);
-                servoRightArm.setPosition(1);
+                servoLeftArm.setPosition(1);
+                servoRightArm.setPosition(0);
+            }
+            */
+
+
+
+            if (gamepad1.a){
+                servoLeftArm.setPosition(gamepad1.left_trigger);
+                servoRightArm.setPosition(1-gamepad1.right_trigger);
             }
             else if(gamepad1.a == false){
 
@@ -189,15 +206,12 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
             }
 
             //Lift Code
-            if (gamepad1.b)
+            if (gamepad1.right_bumper)
                 motorLift.setPower(.3);
-            else //if(gamepad1.b == false)
+            else if(gamepad1.left_bumper)
+                motorLift.setPower(-.3);
+            else
                 motorLift.setPower(0);
-
-
-
-
-
             }
 
            /* else if (gamepad1.dpad_right == false) {
