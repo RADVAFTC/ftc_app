@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
-
+import java.lang.Math.*;
 
 /**
  * Created by ChristopherDeloglos on 12/3/2016.
@@ -22,54 +22,64 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
     private DcMotor motorRearLeft;
     private DcMotor motorFrontRight;
     private DcMotor motorRearRight;
-    // private DcMotor motor5;
-    private Servo servoChoppingBlock;
+    private DcMotor motorLift;
+    private Servo servoLeftArm;
+    private Servo servoRightArm;
+
 
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
-    //private DcMotorController motorController3;
+    private DcMotorController motorController3;
 
     private ServoController servoController1;
 
     private static final double MOTOR_SAFE_SPEED = 0.005;
+    private static final double JOYSTICK_SCALING_POWER_FACTOR = 3;
 
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map for Motor Controllers
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
-        //motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
+        motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
         // Hardware Map for Motors
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
+        motorLift = hardwareMap.dcMotor.get("motorLift");
 
         // Hardware Map for Servo Controllers
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
         // Hardware Map for Servos
-        servoChoppingBlock = hardwareMap.servo.get("Chopping Block");
+        servoLeftArm = hardwareMap.servo.get("Left Arm");
+        servoRightArm = hardwareMap.servo.get("Right Arm");
+
+        // Servo init values
 
         // Sets default direction for motors
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
         motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
         motorRearRight.setDirection(DcMotor.Direction.FORWARD);
+        motorLift.setDirection((DcMotor.Direction.FORWARD));
 
         // Sets mode for motors
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Sets zero power behavior
         motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //servoChoppingBlock.setPosition(.5);
 
@@ -86,22 +96,45 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
             motorRearRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             */
 
+            double padyroot = gamepad1.left_stick_y;
+            double padxroot = gamepad1.left_stick_x;
+
+            if (padyroot<0)
+                padyroot = -Math.sqrt(Math.abs(padyroot));
+            else
+                padyroot = Math.sqrt(padyroot);
+            if (padxroot<0)
+                padxroot = -Math.sqrt(Math.abs(padxroot));
+            else
+                padxroot = Math.sqrt(padxroot);
+            padxroot = Math.pow(padxroot,3);
+            padyroot = Math.pow(padyroot,3);
+
             // Motion Control
-            motorFrontLeft.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
-            motorRearLeft.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
-            motorFrontRight.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
-            motorRearRight.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
+            /*
+            motorFrontLeft.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
+            motorRearLeft.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
+            motorFrontRight.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
+            motorRearRight.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
+            */
+
+            motorFrontLeft.setPower((1*padyroot) + (1*padxroot));
+            motorRearLeft.setPower((1*padyroot) + (-1*padxroot));
+            motorFrontRight.setPower((1*padyroot) + (-1*padxroot));
+            motorRearRight.setPower((1*padyroot) + (1*padxroot));
+
+
 
             // Pivot Control
-            motorFrontLeft.setPower(1*(gamepad1.right_stick_x));
+           /* motorFrontLeft.setPower(1*(gamepad1.right_stick_x));
             motorRearLeft.setPower(-1*(gamepad1.right_stick_x));
             motorFrontRight.setPower(-1*(gamepad1.right_stick_x));
             motorRearRight.setPower(1*(gamepad1.right_stick_x));
-
-            motorFrontLeft.setPower(1*(gamepad1.right_stick_y));
-            motorRearLeft.setPower(-1*(gamepad1.right_stick_y));
-            motorFrontRight.setPower(-1*(gamepad1.right_stick_y));
-            motorRearRight.setPower(1*(gamepad1.right_stick_y));
+            */
+            //motorFrontLeft.setPower(1*(gamepad1.right_stick_y));
+            //motorRearLeft.setPower(-1*(gamepad1.right_stick_y));
+           // motorFrontRight.setPower(-1*(gamepad1.right_stick_y));
+           // motorRearRight.setPower(1*(gamepad1.right_stick_y));
 
             // Sideways controls
 
@@ -142,6 +175,28 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
                 motorFrontRight.setPower(-gamepad1.right_stick_y);
                 motorRearRight.setPower(-gamepad1.right_stick_y);
             */
+            //Servo Code
+
+            if (gamepad1.a == true){
+
+                servoLeftArm.setPosition(0);
+                servoRightArm.setPosition(1);
+            }
+            else if(gamepad1.a == false){
+
+                servoLeftArm.setPosition(.5);
+                servoRightArm.setPosition(.5);
+            }
+
+            //Lift Code
+            if (gamepad1.b)
+                motorLift.setPower(.3);
+            else //if(gamepad1.b == false)
+                motorLift.setPower(0);
+
+
+
+
 
             }
 
@@ -151,8 +206,21 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
                 motorFrontRight.setPower(gamepad1.left_stick_y);
                 motorRearRight.setPower(gamepad1.right_stick_y);
 
+
+
+
             }
             */
+
+
+
+
+
+
+
+
+
+
         }
 
     }
