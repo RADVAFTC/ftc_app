@@ -85,11 +85,14 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
             motorFrontRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             motorRearRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
             */
+
+            // Motion Control
             motorFrontLeft.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
             motorRearLeft.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
             motorFrontRight.setPower((1*gamepad1.left_stick_y) + (1*gamepad1.left_stick_x));
             motorRearRight.setPower((1*gamepad1.left_stick_y) + (-1*gamepad1.left_stick_x));
 
+            // Pivot Control
             motorFrontLeft.setPower(1*(gamepad1.right_stick_x));
             motorRearLeft.setPower(-1*(gamepad1.right_stick_x));
             motorFrontRight.setPower(-1*(gamepad1.right_stick_x));
@@ -100,36 +103,7 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
             motorFrontRight.setPower(-1*(gamepad1.right_stick_y));
             motorRearRight.setPower(1*(gamepad1.right_stick_y));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //Sideways controls
+            // Sideways controls
 
            /* motorFrontRight.setPower(0);
 
@@ -178,87 +152,7 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
                 motorRearRight.setPower(gamepad1.right_stick_y);
 
             }
-
             */
-/*
-            if (gamepad1.left_bumper == true) {
-                PRESSED_NOW = true;
-            }
-            else{
-                PRESSED_NOW = false;
-            }
-            if (JUST_PRESSED == true && PRESSED_NOW == false){
-                motor5.setPower(MOTOR_STOP);
-            }
-            else if (JUST_PRESSED == false && PRESSED_NOW == true){
-                motor5.setPower(MOTOR_SPANKER_SPEED);
-            }
-            JUST_PRESSED = PRESSED_NOW;
-
-            if (gamepad1.right_bumper == true) {
-                PRESSED_NOW = true;
-            }
-            else{
-                PRESSED_NOW = false;
-            }
-            if (JUST_PRESSED == true && PRESSED_NOW == false){
-                motor5.setPower(MOTOR_STOP);
-            }
-            else if (JUST_PRESSED == false && PRESSED_NOW == true){
-                motor5.setPower(-MOTOR_SPANKER_SPEED);
-            }
-            JUST_PRESSED = PRESSED_NOW;
-
-
-            // CONTROLLER 2
-
-
-        }
-        motorFrontLeft.setPower(0);
-        motorRearLeft.setPower(0);
-        motorFrontRight.setPower(0);
-        motorRearRight.setPower(0);
-        //motor5.setPower(0);
-        //servo1.setPosition(0.5);
-
-    }
-
-
-   /* private double setMotorSpeed(double desiredSpeed) {
-        double curSpeed = motorFrontLeft.getPower();
-
-        if (desiredSpeed > curSpeed) {
-            if ((desiredSpeed - curSpeed) < ACCELERATION_RATE) {
-                curSpeed = desiredSpeed;
-            } else {
-                curSpeed += ACCELERATION_RATE;
-            }
-        } else if (desiredSpeed < curSpeed)
-            if ((curSpeed - desiredSpeed) < ACCELERATION_RATE) {
-                curSpeed = desiredSpeed;
-            } else {
-                curSpeed -= ACCELERATION_RATE;
-            }
-        return (curSpeed);
-    }
-/*
-    private void wiggleBeaconButtonBanger() {
-        telemetry.addData("ServoPosition",servoBeacon.getPosition());
-        if (servoBeacon.getPosition() >= SERVO_MAX_POSITION) {
-            SERVO_DIRECTION = RIGHT;
-        }
-        if (servoBeacon.getPosition() <= SERVO_MIN_POSITION){
-            SERVO_DIRECTION = LEFT;
-        }
-
-        if (SERVO_DIRECTION == RIGHT) {
-            servoBeacon.setPosition(servoBeacon.getPosition() - BEACON_SERVO_WIGGLE_INC);
-        }
-        else {
-            servoBeacon.setPosition(servoBeacon.getPosition() + BEACON_SERVO_WIGGLE_INC);
-        }
-    }
-    */
         }
 
     }
