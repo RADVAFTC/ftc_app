@@ -2,12 +2,14 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.vuforia.ar.pl.SensorController;
 
 import java.lang.Math.*;
 
@@ -28,12 +30,15 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
     private Servo servoLeftArm;
     private Servo servoRightArm;
     //private TouchSensor button;
+    private ColorSensor Color;
 
     private DcMotorController motorController1;
     private DcMotorController motorController2;
     private DcMotorController motorController3;
 
     private ServoController servoController1;
+
+    private SensorController sensorController1;
 
     private static final double MOTOR_SAFE_SPEED = 0.005;
     private static final double JOYSTICK_SCALING_POWER_FACTOR = 3;
@@ -59,6 +64,10 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         servoLeftArm = hardwareMap.servo.get("Left Arm");
         servoRightArm = hardwareMap.servo.get("Right Arm");
 
+        // Hardware Map for Color Sensor
+
+        Color = hardwareMap.colorSensor.get("ColorSensor");
+
         // Servo init values
 
         // Sets default direction for motors
@@ -73,18 +82,15 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-<<<<<<< HEAD
         /*
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         */
-=======
         motorLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Sets zero power behavior
->>>>>>> 02a2b3f92a03ea53a4dad66b02823c3f9b6289aa
         motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -218,7 +224,21 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
                 motorLift.setPower(-.3);
             else
                 motorLift.setPower(0);
+
+                /*
+                Color.enableLed(true);  // Turn the LED on
+                Thread.sleep(1000);
+                Color.enableLed(false); // Turn the LED off
+                */
+
+
+
+
+
+
             }
+
+
 
            /* else if (gamepad1.dpad_right == false) {
                 motorFrontLeft.setPower(gamepad1.left_stick_y);

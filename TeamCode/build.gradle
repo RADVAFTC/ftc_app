@@ -14,9 +14,6 @@ apply from: '../build.common.gradle'
 dependencies {
 }
 android {
-<<<<<<< HEAD
 
-=======
->>>>>>> 02a2b3f92a03ea53a4dad66b02823c3f9b6289aa
     buildToolsVersion '26.0.1'
 }
