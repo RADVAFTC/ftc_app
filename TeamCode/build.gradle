@@ -10,9 +10,13 @@
 // Custom definitions may go here
 // Include common definitions from above.
 apply from: '../build.common.gradle'
-android {
 
-    buildToolsVersion '26.0.1'
-}
 dependencies {
+}
+android {
+<<<<<<< HEAD
+
+=======
+>>>>>>> 02a2b3f92a03ea53a4dad66b02823c3f9b6289aa
+    buildToolsVersion '26.0.1'
 }
