@@ -15,7 +15,7 @@ import java.lang.Math.*;
 
 /**
  * Created by ChristopherDeloglos on 12/3/2016.
- *
+ * <p>
  * 2017-2018!!!!!  YEAH!!!
  */
 @TeleOp(name = "TeleOp Mode_2017_18", group = "Tele Operated")
@@ -104,114 +104,19 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         //private boolean __MOTOR_IS_PRESSED_NOW = false;
         while (opModeIsActive()) {
             // CONTROLLER 1
-
-            //Forward and Backward Controls
-           /* motorFrontLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorRearLeft.setPower(gamepad1.left_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorFrontRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            motorRearRight.setPower(gamepad1.right_stick_y + gamepad1.right_trigger - gamepad1.left_trigger);
-            */
-
-            double padyroot = gamepad1.left_stick_y;
-            double padxroot = gamepad1.left_stick_x;
-
-            if (padyroot<0)
-                padyroot = -Math.sqrt(Math.abs(padyroot));
-            else
-                padyroot = Math.sqrt(padyroot);
-            if (padxroot<0)
-                padxroot = -Math.sqrt(Math.abs(padxroot));
-            else
-                padxroot = Math.sqrt(padxroot);
-            padxroot = Math.pow(padxroot,3);
-            padyroot = Math.pow(padyroot,3);
+            double Lpadxroot = normalizeVector(gamepad1.left_stick_x);
+            double Lpadyroot = normalizeVector(gamepad1.left_stick_y);
+            double Rpadxroot = normalizeVector(gamepad1.right_stick_x);
+            double Rpadyroot = normalizeVector(gamepad1.right_stick_y);
 
             // Motion Control
-            /*
-            // Working control for omnidirection motion (not rotation)
-            motorFrontLeft.setPower((1*padyroot) + (1*padxroot));
-            motorRearLeft.setPower((1*padyroot) + (-1*padxroot));
-            motorFrontRight.setPower((1*padyroot) + (-1*padxroot));
-            motorRearRight.setPower((1*padyroot) + (1*padxroot));
-            */
+           setMotors(Lpadxroot,Lpadyroot,Rpadxroot,Rpadyroot);
 
-            /*
-            motorFrontLeft.setPower((1*padyroot) + (1*padxroot));
-            motorRearLeft.setPower((1*padyroot) + (-1*padxroot));
-            motorFrontRight.setPower((1*padyroot) + (-1*padxroot));
-            motorRearRight.setPower((1*padyroot) + (1*padxroot));
-            */
-            motorFrontLeft.setPower((1*padyroot) + (1*padxroot) + -1*(gamepad1.right_stick_x));
-            motorRearLeft.setPower((1*padyroot) + (-1*padxroot) + -1*(gamepad1.right_stick_x));
-            motorFrontRight.setPower((1*padyroot) + (-1*padxroot) + 1*(gamepad1.right_stick_x));
-            motorRearRight.setPower((1*padyroot) + (1*padxroot) + 1*(gamepad1.right_stick_x));
-
-            // Pivot Control
-            /*motorFrontLeft.setPower(1*(gamepad1.right_stick_x));
-            motorRearLeft.setPower(-1*(gamepad1.right_stick_x));
-            motorFrontRight.setPower(-1*(gamepad1.right_stick_x));
-            motorRearRight.setPower(1*(gamepad1.right_stick_x));
-*/
-            //motorFrontLeft.setPower(1*(gamepad1.right_stick_y));
-            //motorRearLeft.setPower(-1*(gamepad1.right_stick_y));
-           // motorFrontRight.setPower(-1*(gamepad1.right_stick_y));
-           // motorRearRight.setPower(1*(gamepad1.right_stick_y));
-
-            // Sideways controls
-
-           /* motorFrontRight.setPower(0);
-
-            if (gamepad2.a == true){
-
-                servoChoppingBlock.setPosition(0);
-            }
-            else if (gamepad2.a == false){
-
-                servoChoppingBlock.setPosition(.8);
-            }
-            */
-
-            /*if (gamepad1.dpad_left == true) {
-                motorFrontLeft.setPower(MOTOR_SAFE_SPEED);
-                motorRearLeft.setPower(MOTOR_SAFE_SPEED);
-                motorFrontRight.setPower(-MOTOR_SAFE_SPEED);
-                motorRearRight.setPower(-MOTOR_SAFE_SPEED);
-
-            } else if (gamepad1.dpad_right == true) {
-                motorFrontLeft.setPower(1);
-                motorRearLeft.setPower(1);
-                motorFrontRight.setPower(1);
-                motorRearRight.setPower(1);
-
-
-            }else {
-                motorFrontLeft.setPower(0);
-                motorRearLeft.setPower(0);
-                motorFrontRight.setPower(-0);
-                motorRearRight.setPower(-0);
-
-                /*else {
-                motorFrontLeft.setPower(gamepad1.left_stick_y);
-                motorRearLeft.setPower(gamepad1.left_stick_y);
-                motorFrontRight.setPower(-gamepad1.right_stick_y);
-                motorRearRight.setPower(-gamepad1.right_stick_y);
-            */
             //Servo Code
-            /*
-            if (gamepad1.a == true){
-
-                servoLeftArm.setPosition(1);
-                servoRightArm.setPosition(0);
-            }
-            */
-
-
-
-            if (gamepad1.a){
+            if (gamepad1.a) {
                 servoLeftArm.setPosition(gamepad1.left_trigger);
-                servoRightArm.setPosition(1-gamepad1.right_trigger);
-            }
-            else if(gamepad1.a == false){
+                servoRightArm.setPosition(1 - gamepad1.right_trigger);
+            } else if (gamepad1.a == false) {
 
                 servoLeftArm.setPosition(.5);
                 servoRightArm.setPosition(.5);
@@ -220,7 +125,7 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
             //Lift Code
             if (gamepad1.right_bumper)
                 motorLift.setPower(.3);
-            else if(gamepad1.left_bumper)
+            else if (gamepad1.left_bumper)
                 motorLift.setPower(-.3);
             else
                 motorLift.setPower(0);
@@ -231,36 +136,29 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
                 Color.enableLed(false); // Turn the LED off
                 */
 
-
-
-
-
-
-            }
-
-
-
-           /* else if (gamepad1.dpad_right == false) {
-                motorFrontLeft.setPower(gamepad1.left_stick_y);
-                motorRearLeft.setPower(gamepad1.right_stick_y);
-                motorFrontRight.setPower(gamepad1.left_stick_y);
-                motorRearRight.setPower(gamepad1.right_stick_y);
-
-
-
-
-            }
-            */
-
-
-
-
-
-
-
-
-
-
         }
+    }
+    // Algorithm for setting the power of the motors to handle multidirectional motion
+    private void setMotors (double left_x_val, double left_y_val, double right_x_val, double right_y_val)
+    {
+        motorFrontLeft.setPower((1 * left_y_val) + (1 * left_x_val) + -1 * (right_x_val));
+        motorRearLeft.setPower((1 * left_y_val) + (-1 * left_x_val) + -1 * (right_x_val));
+        motorFrontRight.setPower((1 * left_y_val) + (-1 * left_x_val) + 1 * (right_x_val));
+        motorRearRight.setPower((1 * left_y_val) + (1 * left_x_val) + 1 * (right_x_val));
 
     }
+
+    // Normalizes the values of the joystick controls
+    private double normalizeVector (double vector)
+    {
+        double normalizedVector;
+        if (vector < 0)
+            normalizedVector = -Math.sqrt(Math.abs(vector));
+        else
+            normalizedVector = Math.sqrt(vector);
+        normalizedVector = Math.pow(normalizedVector, 3);
+        return (normalizedVector);
+    }
+
+
+}

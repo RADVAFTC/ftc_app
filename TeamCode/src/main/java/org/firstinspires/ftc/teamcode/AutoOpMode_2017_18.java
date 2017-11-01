@@ -13,7 +13,8 @@ import com.qualcomm.robotcore.hardware.ServoController;
  * Created by ChristopherDeloglos on 12/3/2016.
  * Purpose: Educational model for robot programming
  */
-@Autonomous(name = "AutoOp Mode 2017-18", group = "Autonomous") // Add this for default (Change name)
+@Autonomous(name = "AutoOp Mode 2017-18", group = "Autonomous")
+// Add this for default (Change name)
 
 public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Change AutoOpMode to match filename/classname)
 {
@@ -28,26 +29,34 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
     private DcMotor motorRearLeft;
     private DcMotor motorFrontRight;
     private DcMotor motorRearRight;
-    private Servo servoChoppingBlock;
+    private DcMotor motorLift;
 
-
+    //Motor Controller Configs//
     private DcMotorController motorController1;
     private DcMotorController motorController2;
+    private DcMotorController motorController3;
 
     //Servo Configs//
+    private Servo servoChoppingBlock;
+    private Servo servoLeftArm;
+    private Servo servoRightArm;
+
+    //Servo Controller Config//
     private ServoController servoController1;
 
-    double[] motorLeftStepsTicks =  {1680};
+
+
+    double[] motorLeftStepsTicks = {1680};
     double[] motorRightStepsTicks = {1680};
 
     double[] leftmotorStepsSpeed = {.3};
-    double[] rightmotorStepsSpeed ={.3};
+    double[] rightmotorStepsSpeed = {.3};
 
-    double[] motorLeftStepsTicks2 =  {1680};
+    double[] motorLeftStepsTicks2 = {1680};
     double[] motorRightStepsTicks2 = {1680};
 
     double[] leftmotorStepsSpeed2 = {.5};
-    double[] rightmotorStepsSpeed2 ={.5};
+    double[] rightmotorStepsSpeed2 = {.5};
 
 
     public void runOpMode() throws InterruptedException {// Add this for default exactly as is
@@ -55,25 +64,30 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
         // Hardware Map for Motor Controllers
         motorController1 = hardwareMap.dcMotorController.get("Motor Controller 1");
         motorController2 = hardwareMap.dcMotorController.get("Motor Controller 2");
-
+        motorController3 = hardwareMap.dcMotorController.get("Motor Controller 3");
 
         // Hardware Map for Motors
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
+        motorLift = hardwareMap.dcMotor.get("motorLift");
+
 
         // Hardware Map for Servo Controllers
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
         // Hardware Map for Servos
-        servoChoppingBlock = hardwareMap.servo.get("Chopping Block");
+        servoLeftArm = hardwareMap.servo.get("Left Arm");
+        servoRightArm = hardwareMap.servo.get("Right Arm");
 
         // Sets default direction for motors
-        motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        motorRearRight.setDirection(DcMotor.Direction.FORWARD);
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        motorRearRight.setDirection(DcMotor.Direction.FORWARD);
+        motorLift.setDirection(DcMotor.Direction.REVERSE);
+
 
         // Sets mode for motors
         /*
@@ -81,210 +95,89 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
         motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         */
+
 
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         waitForStart();
-
-        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()+2000);
-        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()+2000);
-        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+2000);
-        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+2000);
-
-        motorFrontLeft.setPower(0.1);
-        motorRearLeft.setPower(0.1);
-        motorFrontRight.setPower(0.1);
-        motorRearRight.setPower(0.1);
-        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
-        while(gamepad1.a==false);
-
-
-
-        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()-1000);
-        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()-1000);
-        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()-1000);
-        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()-1000);
-        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
-        while(gamepad1.a==false);
-
-        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition()+3000);
-        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition()+3000);
-        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition()+3000);
-        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition()+3000);
-        while(motorFrontLeft.getCurrentPosition()!=motorFrontLeft.getTargetPosition());
-        while(gamepad1.a==false);
-
-
-
-
-        }
-
-    }
-
-
-
-
-
-
-       // waitForStart();
-
-        //This is the command for the first steps to be completed (last year)
-
-        /*
-        for( int i = 0 ; i<motorLeftStepsTicks.length && opModeIsActive(); i++ ){
-
-
-            motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + GetTicksFromInches(motorLeftStepsTicks[i]));
-            motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition() + GetTicksFromInches(motorLeftStepsTicks[i]));
-            motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + GetTicksFromInches(motorRightStepsTicks[i]));
-            motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition() + GetTicksFromInches(motorRightStepsTicks[i]));
-
-
-
-
-            motorFrontLeft.setPower(leftmotorStepsSpeed[i]);
-            motorRearLeft.setPower(leftmotorStepsSpeed[i]);
-            motorFrontRight.setPower(rightmotorStepsSpeed[i]);
-            motorRearRight.setPower(rightmotorStepsSpeed[i]);
-
-
-            while(motorFrontLeft.isBusy() || motorRearLeft.isBusy() || motorFrontRight.isBusy() || motorRearRight.isBusy());
-        }
-
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        while(motorFrontLeft.getCurrentPosition() != 0 || motorFrontRight.getCurrentPosition() != 0) { //Ensures encoders are zero
-                    motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    waitOneFullHardwareCycle(); //Needed within all loops
-                }
-                motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODERS); //Sets mode to use encoders
-                motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODERS); //setMode() is used instead of setChannelMode(), which is now deprecated
-        waitForStart();
-
-
-        motorFrontLeft.setTargetPosition(10); //Sets motor to move 1440 ticks (1440 is one rotation for Tetrix motors)
-        motorFrontRight.setTargetPosition(10);
-        motorFrontLeft.setPower(1);
-        motorFrontRight.setPower(1);
-
+        moveForward(2000,.1);
         Thread.sleep(1000);
-
-        motorFrontLeft.setTargetPosition(1680); //Sets motor to move 1440 ticks (1440 is one rotation for Tetrix motors)
-        motorFrontRight.setTargetPosition(1680);
-        motorFrontLeft.setPower(.5);
-        motorFrontRight.setPower(.5);
-
-        while(motorFrontLeft.getCurrentPosition() < motorFrontLeft.getTargetPosition() || motorFrontLeft.getCurrentPosition() < motorFrontRight.getTargetPosition()) { //While target has not been reached
-            waitOneFullHardwareCycle(); //Needed within all loops
-        }
-        motorFrontLeft.setPower(0);
-        motorFrontRight.setPower(0);
-
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //This is the command for the SECOND steps to be completed (last year)
-
+        moveRotate(2000,.1);
+        Thread.sleep(1000);
+        moveSideways(2000,.1);
 
         /*
-        for( int i = 0 ; i<motorLeftStepsTicks2.length && opModeIsActive(); i++ ){
-            motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + GetTicksFromInches(motorLeftStepsTicks2[i]));
-            motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition() + GetTicksFromInches(motorRightStepsTicks2[i]));
-            motorFrontLeft.setPower(leftmotorStepsSpeed2[i]);
-            motorRearLeft.setPower(rightmotorStepsSpeed2[i]);
-            while(motorFrontLeft.isBusy() || motorRearLeft.isBusy());
-        }
+
+        while (gamepad1.a == false) ;
+
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() - 1000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition() - 1000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() - 1000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition() - 1000);
+        while (motorFrontLeft.getCurrentPosition() != motorFrontLeft.getTargetPosition()) ;
+        while (gamepad1.a == false) ;
+
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + 3000);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition() + 3000);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + 3000);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition() + 3000);
+        while (motorFrontLeft.getCurrentPosition() != motorFrontLeft.getTargetPosition()) ;
+        while (gamepad1.a == false) ;
         */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   /* public int GetTicksFromMeters(double Meters) {
-        Double ticks = GEAR_RATIO * (TICKS_PER_REV * REVS_PER_METER * Meters);
-        return (ticks.intValue());
-    }
-    public int GetTicksFromFeet(double Feet) {
-        return (GetTicksFromMeters(Feet/3.28084));
-    }
-    public int GetTicksFromInches(double Inches) {
-        return (GetTicksFromMeters((Inches/12)/3.28084));
     }
 
-    public double GetFeetFromTicks(int Ticks) {
-        return(Ticks*3.28084/(GEAR_RATIO * (TICKS_PER_REV * REVS_PER_METER)));
-    }
+    private void moveForward(int motorsTicks, double motorsPower)
+    {
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + motorsTicks);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition() + motorsTicks);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + motorsTicks);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition() + motorsTicks);
 
-    public double GetMetersFromTicks(int Ticks){
-        return(Ticks/(GEAR_RATIO * (TICKS_PER_REV * REVS_PER_METER)));
+        motorFrontLeft.setPower(motorsPower);
+        motorRearLeft.setPower(motorsPower);
+        motorFrontRight.setPower(motorsPower);
+        motorRearRight.setPower(motorsPower);
+        while (motorFrontLeft.getCurrentPosition() != motorFrontLeft.getTargetPosition()) ;
+
+
+    }
+    private void moveRotate(int motorsTicks, double motorsPower)
+    {
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + -motorsTicks);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition() + -motorsTicks);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + motorsTicks);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition() + motorsTicks);
+
+        motorFrontLeft.setPower(motorsPower);
+        motorRearLeft.setPower(motorsPower);
+        motorFrontRight.setPower(motorsPower);
+        motorRearRight.setPower(motorsPower);
+        while (motorFrontLeft.getCurrentPosition() != motorFrontLeft.getTargetPosition()) ;
+
+
+    }
+    private void moveSideways(int motorsTicks, double motorsPower){
+
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + motorsTicks);
+        motorRearLeft.setTargetPosition(motorRearLeft.getCurrentPosition() + -motorsTicks);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + -motorsTicks);
+        motorRearRight.setTargetPosition(motorRearRight.getCurrentPosition() + motorsTicks);
+
+        motorFrontLeft.setPower(motorsPower);
+        motorRearLeft.setPower(motorsPower);
+        motorFrontRight.setPower(motorsPower);
+        motorRearRight.setPower(motorsPower);
+        while (motorFrontLeft.getCurrentPosition() != motorFrontLeft.getTargetPosition()) ;
+
     }
 }
-
-     */
