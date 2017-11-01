@@ -105,13 +105,14 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
         motorRearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-
+        int delay = 3000;
         waitForStart();
         moveForward(2000,.1);
-        Thread.sleep(1000);
+        Thread.sleep(delay);
         moveRotate(2000,.1);
-        Thread.sleep(1000);
+        Thread.sleep(delay);
         moveSideways(2000,.1);
+        Thread.sleep(delay);
 
         /*
 
@@ -162,7 +163,7 @@ public class AutoOpMode_2017_18 extends LinearOpMode // Add this for default (Ch
         motorRearLeft.setPower(motorsPower);
         motorFrontRight.setPower(motorsPower);
         motorRearRight.setPower(motorsPower);
-        while (motorFrontLeft.getCurrentPosition() != motorFrontLeft.getTargetPosition()) ;
+        while (motorFrontLeft.getCurrentPosition() != motorFrontLeft.getTargetPosition());
 
 
     }
