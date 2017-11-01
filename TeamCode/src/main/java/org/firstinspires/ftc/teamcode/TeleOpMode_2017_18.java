@@ -88,10 +88,7 @@ public class TeleOpMode_2017_18 extends LinearOpMode {
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         */
-<<<<<<< HEAD
 
-=======
->>>>>>> 4836f096df557a8e28d156ba7abde5d3576ba2b5
         motorLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Sets zero power behavior
